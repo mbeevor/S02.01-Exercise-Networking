@@ -38,6 +38,11 @@ public final class NetworkUtils {
     private static final String API_KEY =
             "6c9918d63e42da844f582cf8d98e3076";
 
+    private static final String STATIC_WEATHER_URL =
+            "https://andfun-weather.udacity.com/staticweather";
+
+    private static final String FORECAST_BASE_URL = STATIC_WEATHER_URL;
+
     /*
      * NOTE: These values only effect responses from OpenWeatherMap, NOT from the fake weather
      * server. They are simply here to allow us to teach you how to build a URL if you were to use
@@ -69,10 +74,9 @@ public final class NetworkUtils {
      */
     public static URL buildUrl(String locationQuery) {
         // COMPLETED (1) Fix this method to return the URL used to query Open Weather Map's API
-        Uri builtUri = Uri.parse(BASE_WEATHER_URL).buildUpon()
+        Uri builtUri = Uri.parse(FORECAST_BASE_URL).buildUpon()
                 .appendQueryParameter(QUERY_PARAM, locationQuery)
                 .appendQueryParameter(FORMAT_PARAM, format)
-                .appendQueryParameter(UNITS_PARAM, units)
                 .appendQueryParameter(DAYS_PARAM, Integer.toString(numDays))
                 .appendQueryParameter(API_ID, API_KEY)
                 .build();

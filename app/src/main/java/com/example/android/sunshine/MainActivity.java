@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
         // COMPLETED (9) Call loadWeatherData to perform the network request to get the weather
 
 
-    // TODO (8) Create a method that will get the user's preferred location and execute your new AsyncTask and call it loadWeatherData
+    // COMPLETED (8) Create a method that will get the user's preferred location and execute your new AsyncTask and call it loadWeatherData
     private void loadWeatherData() {
         String location = SunshinePreferences.getPreferredWeatherLocation(this);
         new FetchWeatherTask().execute(location);
@@ -81,12 +81,18 @@ public class MainActivity extends AppCompatActivity {
             }
 
             String location = params[0];
-            URL weatherSearchResults = NetworkUtils.buildUrl(location);
+            URL weatherRequestUrl  = NetworkUtils.buildUrl(location);
+
             try {
 
-                String jsonWeatherResponse = NetworkUtils.getResponseFromHttpUrl(weatherSearchResults);
-                String[] simpleJsonWeatherData = OpenWeatherJsonUtils.getSimpleWeatherStringsFromJson(MainActivity.this, jsonWeatherResponse);
+                String jsonWeatherResponse = NetworkUtils.getResponseFromHttpUrl(weatherRequestUrl);
+
+
+                String[] simpleJsonWeatherData = OpenWeatherJsonUtils
+                        .getSimpleWeatherStringsFromJson(MainActivity.this, jsonWeatherResponse);
+
                 return simpleJsonWeatherData;
+
             } catch (Exception e) {
                 e.printStackTrace();
                 return null;
@@ -100,9 +106,11 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(String[] weatherData) {
             if (weatherData != null) {
                 for (String weatherString : weatherData) {
-                    mWeatherTextView.append((weatherString)+ "\n\n\n");
+                    mWeatherTextView.append(weatherString + "\n\n\n");
                 }
             }
+
+
         }
     }
 
